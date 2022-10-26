@@ -28,7 +28,7 @@ addgroup -g 82 -S www-data ; \
 adduser -S -D -u 82 -s /sbin/nologin -h /var/www -G www-data www-data &&\
 usermod -aG www-data magento
 COPY default.conf /etc/nginx/conf.d/default.conf
-COPY my.cnf /etc/mysql/
+COPY my.cnf /etc/mysql/my.cnf
 COPY elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.yml
 COPY auth.json /root/.composer/auth.json
 COPY php.ini /etc/php7/php.ini
