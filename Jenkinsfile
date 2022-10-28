@@ -1,56 +1,35 @@
-@Library('libraries')_
-pipeline
+ pipeline
 {
     agent any
         stages
         {
-             stage('continuous download')
+            stage('continuous download')
             {
                 steps
                 {
-                    script
-                    {
-                        cicd.newgit("alpine-magento2.3.5","https://github.com/vivekkumargangam/magento2.3.5.git")
-                    }
+                    git branch: 'alpine-magento2.3.5', url: 'https://github.com/vivekkumargangam/magento2.3.5.git'
                 }
             }
             stage('copying the file to root directory')
             {
                 steps
                 {
-                    script
-                    {
-                        cicd.copy("/var/lib/jenkins/workspace/sharedlibraries","/root")
-                    }
+                    sh 'sudo -S cp -r /var/lib/jenkins/workspace/pipeline/ /root'
                 }
             }
             stage('bulding the docker image')
             {
                 steps
                 {
-                    script
-                    {
-                        cicd.imagebuilding("jalm-2.3.5","/root/sharedlibraries/")
-                    }
+                    sh 'sudo -S docker build -t jalm-2.3.5 -f Dockerfile /root/pipeline/'
                 }
             }
             stage('bulding the docker container')
             {
                 steps
                 {
-                    script
-                    {
-                     try
-                     {
-                         cicd.runcontainer("ja1","jalm-2.3.5")
-                     }
-                     catch(Exception e1)
-                     {
-                        input message: 'remove the container', submitter: 'srikanth'
-                        cicd.deletecontainer("ja1")
-                        cicd.runcontainer("ja1","jalm-2.3.5")
-                     }
-                    }
-                }    
+                    sh 'sudo -S docker run --name ja1 -itd jalm-2.3.5'
+                }
             }
-}            
+        }
+}          
