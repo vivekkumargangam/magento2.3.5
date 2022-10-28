@@ -1,17 +1,15 @@
-pipeline
+ pipeline
 {
     agent any
         stages
         {
-             stage('continuous download')
+            stage('continuous download')
             {
                 steps
                 {
-                    script
-                    {
-                        cicd.newgit("alpine-magento2.3.5","https://github.com/vivekkumargangam/magento2.3.5.git")
-                    }
+                    git branch: 'alpine-magento2.3.5', url: 'https://github.com/vivekkumargangam/magento2.3.5.git'
                 }
             }
         }
-}          
+}           
+            
