@@ -14,7 +14,7 @@ pipeline
             {
                 steps
                 {
-                    sh 'sudo -S cp -r /var/lib/jenkins/workspace/magento_multibranch/ /root'
+                    sh 'sudo -S cp -r /var/lib/jenkins/workspace/_multibranch_alpine-magento2.3.5/ /root'
                 }
             }
             stage('bulding the docker image')
@@ -28,7 +28,20 @@ pipeline
             {
                 steps
                 {
-                    sh 'sudo -S docker run --name ja1 -itd jalm-2.3.5'
+                    script
+                    {
+                     try
+                     
+                     {
+                         sh 'sudo -S docker run --name ja1 -itd jalm-2.3.5'
+                     }
+                     catch(Exception e1)
+                     {
+                        input message: 'remove the container', submitter: 'srikanth'
+                        sh 'sudo -S docker rm -f ja1'
+                        sh 'sudo -S docker run --name ja1 -itd jalm-2.3.5'
+                     }
+                    }
                 }
             }
         }
