@@ -14,7 +14,7 @@ pipeline
             {
                 steps
                 {
-                    sh 'sudo -S cp -r /var/lib/jenkins/workspace/pipeline/ /root'
+                    sh 'sudo -S cp -r /var/lib/jenkins/workspace/magento_multibranch/ /root'
                 }
             }
             stage('bulding the docker image')
