@@ -1,8 +1,8 @@
-FROM alpine:3.12
+FROM ubuntu:latest
 MAINTAINER Kensium
 ENV DEBIAN_FRONTEND noninteractive
-RUN apk update &&\
+RUN apt-get update &&\
 #nginx installation
-apk add git nginx && mkdir /run/nginx &&\
+apt-get nginx
 COPY services.sh /
 ENTRYPOINT ["/services.sh"]
