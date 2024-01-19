@@ -1,4 +1,4 @@
 #!/bin/sh
 #starting nginx
-nginx
+service nginx start
 watch netstat -tulpn
